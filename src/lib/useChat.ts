@@ -6,10 +6,12 @@ import type { ChatMessage } from './types';
 /** Loads chat messages, listens for new ones in realtime, and polls as a safety net. */
 export function useChat(code: string, roomId: string) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   const refresh = useCallback(async () => {
     try {
       setMessages(await getMessages(code));
+      setLoaded(true);
     } catch {
       /* keep the last messages; the room page already shows connection problems */
     }
@@ -35,5 +37,5 @@ export function useChat(code: string, roomId: string) {
     };
   }, [roomId, refresh]);
 
-  return { messages, refresh };
+  return { messages, loaded, refresh };
 }

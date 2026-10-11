@@ -2,9 +2,12 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useChat } from '../lib/useChat';
 import { sendMessage } from '../lib/api';
 import { friendlyError } from '../lib/errors';
+import { useChatAlerts } from '../lib/chatAlerts';
 
 export function Chat({ code, roomId, me }: { code: string; roomId: string; me: string }) {
-  const { messages, refresh } = useChat(code, roomId);
+  const { messages, loaded, refresh } = useChat(code, roomId);
+  const card = useRef<HTMLElement>(null);
+  const { unread, soundOn, toggleSound, perm, enableNotifications } = useChatAlerts(messages, loaded, me, card);
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -37,8 +40,22 @@ export function Chat({ code, roomId, me }: { code: string; roomId: string; me: s
     new Date(iso).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Cairo' });
 
   return (
-    <section className="card" aria-label="الشات">
-      <h2>الشات</h2>
+    <section className="card" aria-label="الشات" ref={card}>
+      <h2 className="chat-title">
+        الشات
+        {unread > 0 && (
+          <span className="unread-badge" role="status" aria-label={`${unread} رسايل جديدة`}>{unread > 9 ? '9+' : unread}</span>
+        )}
+      </h2>
+      <div className="chat-tools">
+        <button type="button" className="btn small ghost" onClick={toggleSound} aria-pressed={soundOn}>
+          {soundOn ? 'الصوت: شغال' : 'الصوت: مقفول'}
+        </button>
+        {perm === 'default' && (
+          <button type="button" className="btn small ghost" onClick={() => void enableNotifications()}>فعّل التنبيهات</button>
+        )}
+        {perm === 'denied' && <span className="muted">التنبيهات مقفولة من إعدادات المتصفح</span>}
+      </div>
       <p className="muted">الرسايل بتتمسح لما الروم تخلص.</p>
       <ol className="chat-list" ref={list} aria-live="polite">
         {messages.length === 0 && <li className="muted">مفيش رسايل لسه — ابدأ انت.</li>}
