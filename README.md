@@ -42,7 +42,8 @@ Set the same two `VITE_` variables in the host's settings. Hash routing means no
 - **Security:** clients cannot write tables at all. Every change goes through `SECURITY DEFINER` functions that use
   `auth.uid()` (never a client-sent id) and validate state. Only members can read a room's data.
 - **Timer:** each "studying stretch" is a row with `started_at`/`ended_at` (UTC). Totals are computed in SQL from
-  timestamps and clipped to the room's day (`Africa/Cairo`), so refreshes, throttled tabs and midnight are handled.
+  timestamps and count everything since the room started (no midnight reset), so refreshes and throttled tabs are handled.
+  Everything is wiped when the last member leaves the room.
   One active session per user per room is enforced by a unique index.
 - **Realtime:** the app subscribes to row changes and re-fetches `get_room_state`; it also polls every 10 s and on
   reconnect, so a missed event self-heals.

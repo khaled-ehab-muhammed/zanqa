@@ -23,8 +23,6 @@ export type RoomInfo = {
 export type RoomState = {
   room: RoomInfo;
   members: Member[];
-  day_start: string;
-  day_end: string;
   server_now: string;
   me: string;
 };

@@ -11,7 +11,6 @@ export function useRoomState(code: string) {
   const [connected, setConnected] = useState(true);
   const [now, setNow] = useState(Date.now());
   const fetchedAt = useRef(Date.now());
-  const rolloverTried = useRef('');
 
   const refresh = useCallback(async () => {
     try {
@@ -50,16 +49,6 @@ export function useRoomState(code: string) {
     const t = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(t);
   }, []);
-
-  // Refetch right after the room's day boundary so the leaderboard resets on time.
-  useEffect(() => {
-    if (!state) return;
-    const serverNowEst = Date.parse(state.server_now) + (now - fetchedAt.current);
-    if (serverNowEst >= Date.parse(state.day_end) && rolloverTried.current !== state.day_end) {
-      rolloverTried.current = state.day_end;
-      void refresh();
-    }
-  }, [now, state, refresh]);
 
   const roomId = state?.room.id;
   useEffect(() => {

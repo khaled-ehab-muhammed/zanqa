@@ -55,9 +55,6 @@ export function RoomPage({ code, onExit }: { code: string; onExit: () => void })
   const isFounder = room.founder_id === state.me;
   const active = room.status === 'active';
   const link = `${location.origin}${location.pathname}#/room/${room.code}`;
-  const dayLabel = new Intl.DateTimeFormat('ar-EG', {
-    timeZone: room.timezone, weekday: 'long', day: 'numeric', month: 'long',
-  }).format(new Date(state.server_now));
 
   return (
     <div className="stack">
@@ -108,7 +105,7 @@ export function RoomPage({ code, onExit }: { code: string; onExit: () => void })
               {me.has_started ? 'كمّل مذاكرة' : 'ابدأ المذاكرة'}
             </button>
           )}
-          <p className="muted">النهارده: {dayLabel} — الترتيب بيتصفّر 12 بالليل بتوقيت القاهرة</p>
+          <p className="muted">الوقت بيتحسب من أول ما الزنقة بدأت، وبيتصفّر لما الكل يسيب الروم</p>
         </section>
       )}
 
