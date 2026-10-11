@@ -7,13 +7,6 @@ async function rpc<T = void>(fn: string, args?: Record<string, unknown>): Promis
   return data as T;
 }
 
-export async function ensureSession(): Promise<void> {
-  const { data } = await supabase.auth.getSession();
-  if (data.session) return;
-  const { error } = await supabase.auth.signInAnonymously();
-  if (error) throw new Error(error.message);
-}
-
 export async function getProfile(): Promise<Profile | null> {
   const { data: u } = await supabase.auth.getUser();
   if (!u.user) return null;

@@ -11,7 +11,7 @@ React + TypeScript + Vite on the front, Supabase (anonymous auth, Postgres + RLS
 
 ## 2. Create the backend (about 5 minutes)
 1. Supabase Dashboard → **New project**. Wait until it is ready.
-2. **Authentication → Providers (or Sign In / Providers) → enable "Anonymous sign-ins"**. This is required.
+2. **Accounts:** follow `AUTH_SETUP.md` (email confirmation, redirect URL, custom SMTP). Anonymous sign-ins are no longer used.
 3. **SQL Editor → New query**, paste the whole of `supabase/migrations/0001_init.sql`, press **Run**.
    If the last line (`alter publication supabase_realtime ...`) errors, open **Database → Replication/Publications**
    and enable Realtime for the tables `rooms`, `room_members`, `study_sessions`, then re-run only the remaining lines.
@@ -37,8 +37,8 @@ Other commands: `npm run build` (typecheck + production build), `npm test` (unit
 Set the same two `VITE_` variables in the host's settings. Hash routing means no server rewrites are needed.
 
 ## How it works (short)
-- **Identity:** Supabase anonymous sign-in; the display name is only a profile field. Identity lives in that browser's
-  session. Clearing site data or logging out means that account cannot be recovered (no email/phone in this MVP).
+- **Identity:** Supabase Auth accounts (email + password, with a confirmation email). The display name is a profile field.
+  Setup steps (email confirmation, redirect URL, custom SMTP) are in `AUTH_SETUP.md`.
 - **Security:** clients cannot write tables at all. Every change goes through `SECURITY DEFINER` functions that use
   `auth.uid()` (never a client-sent id) and validate state. Only members can read a room's data.
 - **Timer:** each "studying stretch" is a row with `started_at`/`ended_at` (UTC). Totals are computed in SQL from
@@ -49,5 +49,5 @@ Set the same two `VITE_` variables in the host's settings. Hash routing means no
   reconnect, so a missed event self-heals.
 
 ## Known limitations
-No account recovery; a room is deleted when its last member leaves; no history screens; the wordmark SVG uses live
+A room is deleted when its last member leaves; no history screens; the wordmark SVG uses live
 Arabic text (see `brand/brand-guidelines.md`).
