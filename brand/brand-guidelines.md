@@ -1,8 +1,6 @@
 # زنقة — Brand guidelines
 
-**Idea:** "الزنقة" is the squeeze of an approaching deadline. The symbol is a timer ring that is not closed — time is
-running out — with an orange dot that has popped out of it, like the نقطة of ز / ن. Competitive, not stressful:
-the ring stays open and calm, the dot is the single point of energy.
+**Idea:** "الزنقة" is the squeeze of an approaching deadline. The symbol is one ring that holds two Arabic letters: ز (its orange dot sits in the upper-right gap) and ن (its dot sits in the centre). The ring is split into two arcs, and the two gaps sit opposite each other, so it also reads as a timer running out. Competitive, not stressful.
 
 **Personality:** confident, youthful, friendly-rivalry, Egyptian. Voice: colloquial Egyptian Arabic for moments of
 feedback ("الزنقة بدأت!"), clear standard labels for navigation and buttons.
@@ -10,7 +8,7 @@ feedback ("الزنقة بدأت!"), clear standard labels for navigation and bu
 ## Assets
 | File | Use |
 |---|---|
-| `logo-symbol.svg`, `favicon.svg` | app icon, favicon, small sizes (works down to 16px) |
+| `logo-symbol.svg`, `favicon.svg` | app icon, favicon, small sizes (check at 16px before using it smaller) |
 | `logo-primary.svg` | symbol + wordmark on light backgrounds |
 | `logo-dark.svg` | symbol + wordmark on Ink |
 | `assets/avatar.svg` | square social avatar (orange) |
