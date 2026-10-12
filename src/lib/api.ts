@@ -29,4 +29,3 @@ export const pauseTimer = (code: string) => rpc('pause_timer', { p_code: code })
 export const getRoomState = (code: string) => rpc<RoomState>('get_room_state', { p_code: code });
 export const sendMessage = (code: string, body: string) => rpc('send_message', { p_code: code, p_body: body });
 export const getMessages = (code: string) => rpc<ChatMessage[]>('get_messages', { p_code: code });
-export const heartbeat = (code: string) => rpc('heartbeat', { p_code: code });
