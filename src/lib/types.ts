@@ -7,6 +7,7 @@ export type Member = {
   studying: boolean;
   active_started_at: string | null;
   has_started: boolean;
+  online: boolean; // sent a heartbeat in the last minute
 };
 
 export type RoomInfo = {
